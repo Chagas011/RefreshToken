@@ -13,9 +13,7 @@ export class RefreshTokenController {
     const result = this.schema.safeParse(request.body);
 
     if (!result.success) {
-      return reply
-        .code(400)
-        .send({ errors: result.error.issues });
+      return reply.code(400).send({ errors: result.error.issues });
     }
 
     const { refreshToken: refreshTokenId } = result.data;
@@ -23,17 +21,13 @@ export class RefreshTokenController {
     const refreshToken = await RefreshTokenRepository.findById(refreshTokenId);
 
     if (!refreshToken) {
-      return reply
-        .code(401)
-        .send({ errors: 'Invalid refresh token.' });
+      return reply.code(401).send({ errors: 'Invalid refresh token.' });
     }
 
     if (Date.now() > refreshToken.expiresAt.getTime()) {
       await RefreshTokenRepository.deleteById(refreshToken.id);
 
-      return reply
-        .code(401)
-        .send({ errors: 'Expired refresh token.' });
+      return reply.code(401).send({ errors: 'Expired refresh token.' });
     }
 
     const expiresAt = new Date();
@@ -48,11 +42,9 @@ export class RefreshTokenController {
       RefreshTokenRepository.deleteById(refreshToken.id),
     ]);
 
-    return reply
-      .code(200)
-      .send({
-        accessToken,
-        refreshToken: newRefreshToken.id,
-      });
+    return reply.code(200).send({
+      accessToken,
+      refreshToken: newRefreshToken.id,
+    });
   };
 }

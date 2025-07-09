@@ -14,9 +14,7 @@ export class SignUpController {
     const result = this.schema.safeParse(request.body);
 
     if (!result.success) {
-      return reply
-        .code(400)
-        .send({ errors: result.error.issues });
+      return reply.code(400).send({ errors: result.error.issues });
     }
 
     const { email, name, password } = result.data;
@@ -24,9 +22,7 @@ export class SignUpController {
     const accountAlreadyExists = await AccountsRepository.findByEmail(email);
 
     if (accountAlreadyExists) {
-      return reply
-        .code(409)
-        .send({ errors: 'This email is already in use.' });
+      return reply.code(409).send({ errors: 'This email is already in use.' });
     }
 
     const hashedPassword = await hash(password, 12);
@@ -37,14 +33,12 @@ export class SignUpController {
       password: hashedPassword,
     });
 
-    return reply
-      .code(201)
-      .send({
-        account: {
-          id: account.id,
-          name: account.name,
-          email: account.email,
-        },
-      });
+    return reply.code(201).send({
+      account: {
+        id: account.id,
+        name: account.name,
+        email: account.email,
+      },
+    });
   };
 }

@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@fastify/cors": "^8.5.0",
     "@fastify/jwt": "^8.0.0",
     "@prisma/client": "5.8.1",
     "bcryptjs": "^2.4.3",
@@ -17,6 +18,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
+    "prettier": "^3.6.2",
     "prisma": "^5.8.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"

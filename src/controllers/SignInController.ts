@@ -16,9 +16,7 @@ export class SignInController {
     const result = this.schema.safeParse(request.body);
 
     if (!result.success) {
-      return reply
-        .code(400)
-        .send({ errors: result.error.issues });
+      return reply.code(400).send({ errors: result.error.issues });
     }
 
     const { email, password } = result.data;
@@ -26,17 +24,13 @@ export class SignInController {
     const account = await AccountsRepository.findByEmail(email);
 
     if (!account) {
-      return reply
-        .code(401)
-        .send({ errors: 'Invalid credentials.' });
+      return reply.code(401).send({ errors: 'Invalid credentials.' });
     }
 
     const isPasswordValid = await compare(password, account.password);
 
     if (!isPasswordValid) {
-      return reply
-        .code(400)
-        .send({ errors: 'Invalid credentials.' });
+      return reply.code(400).send({ errors: 'Invalid credentials.' });
     }
 
     const accessToken = await reply.jwtSign({ sub: account.id });
@@ -49,11 +43,9 @@ export class SignInController {
       expiresAt,
     });
 
-    return reply
-      .code(200)
-      .send({
-        accessToken,
-        refreshToken: id,
-      });
+    return reply.code(200).send({
+      accessToken,
+      refreshToken: id,
+    });
   };
 }

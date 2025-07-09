@@ -12,7 +12,7 @@ export class AccountsRepository {
     const account = await prismaClient.account.findUnique({
       where: {
         email,
-      }
+      },
     });
 
     return account;
@@ -24,7 +24,7 @@ export class AccountsRepository {
         email,
         name,
         password,
-      }
+      },
     });
   }
 }
